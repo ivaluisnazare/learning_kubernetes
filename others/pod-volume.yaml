@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-volume
+spec:
+  containers:
+    - name: nginx-container
+      image: nginx:latest
+      volumeMounts:
+        - mountPath: /volume-into-container
+          name: second-volume
+    - name: jenkins-container
+      image: jenkins/jenkins:lts
+      volumeMounts:
+        - mountPath: /volume-into-container
+          name: second-volume
+  volumes:
+    - name: second-volume
+      hostPath:
+        path: /home/second-volume
+        type: DirectoryOrCreate
